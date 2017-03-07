@@ -10,7 +10,7 @@
 <div id="geo">
     <form class="text-center" action='{% url "Analyzer:show_trending" %}' method="POST">{% csrf_token %}
         <h3>Search trending by location(Using WOEID):</h3>
-       <p><select size="2" name="location" id="location">
+       <p><select size="8" name="location" id="location">
            {% for item in sorted_woeid_list %}
                 <option value={{ item.woeid }}>{{ item.name }}</option>
             {% endfor %}
