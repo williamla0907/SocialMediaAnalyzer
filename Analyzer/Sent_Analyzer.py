@@ -1,6 +1,8 @@
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+
 nltk.data.path.append('./nltk_data/')
 
 class Analyzer:
