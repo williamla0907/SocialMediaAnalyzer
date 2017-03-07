@@ -32,7 +32,7 @@ def sentiment_scores(request):
         result_list.append(d['text'])
 
     keyword_hits = len(result_list)
-
+    '''
     analyzer = Sent_Analyzer.Analyzer()
     scores, length = analyzer.retrieveSentScores(result_list)
     scoresList = []
@@ -42,19 +42,19 @@ def sentiment_scores(request):
     scoresList[1] = scoresList[1] * 100
 
     labels = ['Positive', 'Negative']
-
+    '''
     #Done time
     elapsed_time = time.time() - start_time
 
     return render(request, 'Analyzer/sentiment_scores.html', {"elapsed_time": elapsed_time,
                                                               "data": result_list,
                                                               "keyword_hits": keyword_hits,
-                                                              "keyword": keyword,"labels": labels, "scores": scoresList})
+                                                              "keyword": keyword})
     '''
-    return render(request, 'Analyzer/sentiment_scores.html',
-                  {"labels": labels, "scores": scoresList, 'data': result_list, "keyword_hits": keyword_hits,
-                   "elapsed_time": elapsed_time,
-                   "keyword": keyword})
+    return render(request, 'Analyzer/sentiment_scores.html', {"elapsed_time": elapsed_time,
+                                                              "data": result_list,
+                                                              "keyword_hits": keyword_hits,
+                                                              "keyword": keyword,"labels": labels, "scores": scoresList})
     '''
 
 
