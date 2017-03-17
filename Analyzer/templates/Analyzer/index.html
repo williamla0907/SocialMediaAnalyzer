@@ -23,4 +23,125 @@
     </div>
 </div>
 
+<div class="container">
+    <h1>Trends In World</h1>
+    <div id="charts">
+      <div class="row">
+        <h3>Twitter top 10 tweet keywords</h3>
+        <canvas class="chart" id="twChart" width="1024px" height="500px"></canvas>
+      </div>
+      <div class="row">
+        <h3>Google top 10 searching keywords</h3>
+        <canvas class="chart" id="gogChart" width="1024px" height="500px"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap Javascript -->
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script>
+    var numberWithCommas = function (x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
+    var bar_tw = document.getElementById('twChart');
+    var bar_chart_tw = new Chart(bar_tw, {
+      type: 'bar',
+      data: {
+        labels: {{ twkeys|safe }},
+        datasets: [
+          {
+            label: 'Tweets',
+            data: {{ twcounts }},
+            backgroundColor: "rgba(55, 160, 225, 0.7)",
+            hoverBackgroundColor: "rgba(55, 160, 225, 0.7)",
+            hoverBorderWidth: 2,
+            hoverBorderColor: 'lightgrey'
+          },
+        ]
+      },
+      options: {
+        animation: {
+          duration: 10,
+        },
+        tooltips: {
+          mode: 'label',
+          callbacks: {
+            label: function (tooltipItem, data) {
+              return data.datasets[tooltipItem.datasetIndex].label + ": " + numberWithCommas(tooltipItem.yLabel);
+            }
+          }
+        },
+        responsive: false,
+        scales: {
+          xAxes: [{
+            stacked: true,
+            gridLines: {display: false},
+          }],
+          yAxes: [{
+            stacked: true,
+            ticks: {
+              callback: function (value) {
+                return numberWithCommas(value);
+              },
+            },
+          }],
+        }, // scales
+        legend: {display: false}
+      } // options
+    }
+  );
+
+    var bar_gog = document.getElementById('gogChart');
+    var bar_char_gog = new Chart(bar_gog, {
+      type: 'bar',
+      data: {
+        labels: {{ gogTitles|safe }},
+        datasets: [
+          {
+            label: 'Searched(Lower Bound)',
+            label: 'Searched',
+            data: {{ gogCounts }},
+            backgroundColor: "rgba(55, 160, 225, 0.7)",
+            hoverBackgroundColor: "rgba(55, 160, 225, 0.7)",
+            hoverBorderWidth: 2,
+            hoverBorderColor: 'lightgrey'
+          },
+        ]
+      },
+      options: {
+        animation: {
+          duration: 10,
+        },
+        tooltips: {
+          mode: 'label',
+          callbacks: {
+            label: function (tooltipItem, data) {
+              return data.datasets[tooltipItem.datasetIndex].label + ": " + numberWithCommas(tooltipItem.yLabel);
+            }
+          }
+        },
+        responsive: false,
+        scales: {
+          xAxes: [{
+            stacked: true,
+            gridLines: {display: false},
+          }],
+          yAxes: [{
+            stacked: true,
+            ticks: {
+              callback: function (value) {
+                return numberWithCommas(value);
+              },
+            },
+          }],
+        }, // scales
+        legend: {display: false}
+      } // options
+    });
+  </script>
+
 {% endblock %}

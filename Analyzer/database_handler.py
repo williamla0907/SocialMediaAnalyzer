@@ -16,13 +16,14 @@ class DatabaseHandler:
             FilterExpression=Attr('text').contains(keyword.lower()) | Attr('text').contains(keyword.upper()) | Attr('text').contains(keyword.title())
         )
         items = response['Items']
+        '''
         while (response.get('LastEvaluatedKey')):
             response = self.table.scan(
                 FilterExpression=Attr('text').contains(keyword.lower()) | Attr('text').contains(keyword.upper()) | Attr(
                     'text').contains(keyword.title()),
                 ExclusiveStartKey=response['LastEvaluatedKey'])
             items.extend(response['Items'])
-
+        '''
         return items
 
 

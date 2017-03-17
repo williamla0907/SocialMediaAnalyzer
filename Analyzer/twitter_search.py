@@ -15,10 +15,11 @@ class Twitter_Search():
         self.auth = twitter.oauth.OAuth(OAUTH_TOKEN,OAUTH_TOKEN_SECRET,CONSUMER_KEY,CONSUMER_SECRET)
         self.twitter_api = twitter.Twitter(auth=self.auth)
 
-
+    # Change geo location
     def change_woe_id(self, NEW_WOE):
         self.WOE_ID = NEW_WOE
 
+    # Top 10 keyword from Twitter based on geo location
     def trending_search(self):
         world_trends = self.twitter_api.trends.place(_id=self.WOE_ID)
         full_trending = world_trends[0]["trends"]

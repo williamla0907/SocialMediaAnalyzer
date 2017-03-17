@@ -3,12 +3,37 @@ from Analyzer.forms import keywordForm, locationForm
 from Analyzer.database_handler import DatabaseHandler
 from Analyzer.woeid import WOEID
 from Analyzer.twitter_search import Twitter_Search
+from Analyzer.google_search import gogTopTrends
 from . import Sent_Analyzer
 from Analyzer.response import Response
 import time, json, operator
 
 def index(request):
-    return render(request, 'Analyzer/index.html')
+
+    #twitter trend
+    twitter_search_obj = Twitter_Search()
+    twitter_trend = twitter_search_obj.trending_search()
+    twitter_trending_keywords = []
+    twitter_trending_keywords_counts_data = []
+    for r in twitter_trend:
+        twitter_trending_keywords.append(r.text)
+        twitter_trending_keywords_counts_data.append(r.vote)
+
+    #google trend
+    google_trend = gogTopTrends()
+    sorted_titles = sorted(google_trend.items(), key=operator.itemgetter(1), reverse=True)
+    google_trending_keywords = []
+    google_trending_keywords_counts_data = []
+
+    for item in sorted_titles[0:10]:
+        google_trending_keywords.append(item[0])
+        google_trending_keywords_counts_data.append(item[1])
+
+
+    return render(request, 'Analyzer/index.html', {'twkeys': twitter_trending_keywords,
+                                                   'twcounts': twitter_trending_keywords_counts_data,
+                                                   'gogTitles': google_trending_keywords,
+                                                   'gogCounts': google_trending_keywords_counts_data})
 
 def sentiment_scores(request):
 
@@ -95,7 +120,6 @@ def show_trending(request):
     res = trend_search.trending_search()
     keywords = []
     counts_data = []
-    print(len(res))
     for r in res:
         keywords.append(r.text)
         counts_data.append(r.vote)
