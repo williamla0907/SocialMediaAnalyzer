@@ -23,6 +23,7 @@ class Analyzer:
         finalCompoundScore = 0
 
         length = len(data)
+        if (length == 0): length = 1
         for line in data:
             sentimentScores = sid.polarity_scores(line)
             # Compound is the sum of both pos & neg scores
