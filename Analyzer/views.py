@@ -5,6 +5,7 @@ from Analyzer.woeid import WOEID
 from Analyzer.twitter_search import Twitter_Search
 from Analyzer.google_search import gogTopTrends
 from . import Sent_Analyzer
+from Analyzer.firebase_database import getKeywordsFromDatabase, getData
 from Analyzer.response import Response
 import time, json, operator
 
@@ -29,11 +30,13 @@ def index(request):
         google_trending_keywords.append(item[0])
         google_trending_keywords_counts_data.append(item[1])
 
+    trendList = getKeywordsFromDatabase()
 
     return render(request, 'Analyzer/index.html', {'twkeys': twitter_trending_keywords,
                                                    'twcounts': twitter_trending_keywords_counts_data,
                                                    'gogTitles': google_trending_keywords,
-                                                   'gogCounts': google_trending_keywords_counts_data})
+                                                   'gogCounts': google_trending_keywords_counts_data,
+                                                   'trendList':trendList})
 
 def sentiment_scores(request):
 
@@ -124,6 +127,32 @@ def show_trending(request):
         keywords.append(r.text)
         counts_data.append(r.vote)
 
-
-
     return render(request, 'Analyzer/show_trending.html', {"keywords":keywords, "counts_data":counts_data, "woeid_location":woeid_location})
+
+
+def show(request):
+    #Get input
+    if request.method == 'POST':
+        form = keywordForm(request.POST)
+        if form.is_valid():
+            keyword = form.cleaned_data['keyword']
+    else:
+        form = keywordForm()
+
+    data = getData(keyword)
+
+    analyzer = Sent_Analyzer.Analyzer()
+    scores, length = analyzer.retrieveSentScores(data)
+    scoresList = []
+    scoresList.append(scores['pos'])
+    scoresList.append(scores['neg'])
+    scoresList[0] = scoresList[0] * 100
+    scoresList[1] = scoresList[1] * 100
+
+    labels = ['Positive', 'Negative']
+
+    return render(request, 'Analyzer/show.html', {'data':data,"keyword": keyword,"labels": labels, "scores": scoresList})
+
+
+
+

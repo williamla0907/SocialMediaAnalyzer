@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^show_database/$', views.show_database, name='show_database'),
     url(r'^trending/$', views.trending, name='trending'),
     url(r'^show_trending/$', views.show_trending, name='show_trending'),
+    url(r'^show_firebase$', views.show, name='show'),
 ]
