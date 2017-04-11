@@ -2,10 +2,10 @@ from pyrebase import initialize_app
 
 #Firebase credentials
 config = {
-  "apiKey": "AIzaSyBr4jdeC3GoXYf1OiFqzzCHxD68FhloRkE",
-  "authDomain": "socialmediaanalyzer-656b7.firebaseapp.com",
-  "databaseURL": "https://socialmediaanalyzer-656b7.firebaseio.com",
-  "storageBucket": "socialmediaanalyzer-656b7.appspot.com"
+  "apiKey": "AIzaSyBhm88HaSINpFkJaftIQ6qi4bNLsZGc9Pc",
+  "authDomain": "tweetsdb-c46cf.firebaseapp.com",
+  "databaseURL": "https://tweetsdb-c46cf.firebaseio.com/",
+  "storageBucket": "tweetsdb-c46cf.appspot.com",
 }
 
 #Firebase Auth and get database method
