@@ -5,7 +5,7 @@
 {% block active_index %} active {% endblock %}
 
 {% block body %}
-
+<!--
 <div id="home">
     <div class="container">
                 <form class="form-horizontal" action='{% url "Analyzer:sentiment_scores" %}' method="POST">{% csrf_token %}
@@ -22,12 +22,12 @@
                 </form>
     </div>
 </div>
-
-    <div class="container">
+-->
+    <div id="searchbox" class="container">
                 <form class="form-horizontal" action='{% url "Analyzer:show" %}' method="POST">{% csrf_token %}
 
                     <div class="form-group">
-                        <div>Keyword list</div>
+                        <p id="keywordlist">Keyword list</p>
                         <select size="10" name="keyword">
                             {%for trend in trendList%}
                             <option value="{{trend}}">{{trend}}</option>
@@ -42,7 +42,7 @@
                     </div>
                 </form>
     </div>
-
+<hr>
 <div class="container">
     <h1>Trends In World</h1>
     <div id="charts">
