@@ -28,16 +28,16 @@
 
                     <div class="form-group">
                         <p id="keywordlist">Keyword list</p>
-                        <select size="10" name="keyword">
+                        <select id="search" size="10" name="keyword">
                             {%for trend in trendList%}
-                            <option value="{{trend}}">{{trend}}</option>
+                            <option id="{{trend}}" value="{{trend}}">{{trend}}</option>
                             {%endfor%}
                         </select>
 
                     </div>
                     <div class="form-group">
                         <div >
-                            <button type="submit" class="btn btn-default">Search</button>
+                            <button id="search-button" type="submit" class="btn btn-default">Search</button>
                         </div>
                     </div>
                 </form>
@@ -162,5 +162,22 @@
                 legend: {display: false}
             } // options
         });
+    </script>
+
+    <script>
+
+        function addEvent(obj, type, fn){
+            if(obj && obj.addEventListener){
+                obj.addEventListener(type, fn);
+            }else if(obj && obj.attachEvent){
+                obj.attachEvent('on', type, fn);
+            }
+        }
+
+        function init() {
+            var i = document.getElementById('search');
+            addEvent(i, 'change', function(){document.getElementById('search-button').innerHTML = "Search " + i.value});
+        }
+        window.onload = init;
     </script>
 {% endblock %}

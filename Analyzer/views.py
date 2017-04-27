@@ -31,12 +31,15 @@ def index(request):
         google_trending_keywords_counts_data.append(item[1])
 
     trendList = getKeywordsFromDatabase()
+    trends = []
+    for item in trendList:
+        trends.append(item)
 
     return render(request, 'Analyzer/index.html', {'twkeys': twitter_trending_keywords,
                                                    'twcounts': twitter_trending_keywords_counts_data,
                                                    'gogTitles': google_trending_keywords,
                                                    'gogCounts': google_trending_keywords_counts_data,
-                                                   'trendList':trendList})
+                                                   'trendList':trends})
 
 def sentiment_scores(request):
 
