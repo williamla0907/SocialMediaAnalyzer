@@ -7,4 +7,6 @@ urlpatterns = [
     url(r'^trending/$', views.trending, name='trending'),
     url(r'^show_trending/$', views.show_trending, name='show_trending'),
     url(r'^show_firebase$', views.show, name='show'),
+    url(r'^feedback/$', views.feedback, name='feedback'),
+    url(r'^add_feedback/$', views.add_feedback, name='add_feedback'),
 ]

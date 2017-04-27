@@ -156,6 +156,11 @@ def show(request):
 
     return render(request, 'Analyzer/show.html', {'data':data,"keyword": keyword,"labels": labels, "scores": scoresList})
 
+def feedback(request):
 
+    return render(request, 'Analyzer/feedback.html')
+
+def add_feedback(request):
+    return render(request, 'Analyzer/add_feedback.html')
 
 

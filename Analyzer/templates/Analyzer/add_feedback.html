@@ -1,0 +1,10 @@
+{% extends 'Analyzer/base.html' %}
+
+{%block title%} Feedback {% endblock %}
+
+{% block active_feedback%} active {% endblock %}
+
+{% block body %}
+<h1> Feedback submitted!</h1>
+    <p class="center">Click <a href="{% url 'Analyzer:feedback' %}">Feedback</a> to go back</p>
+{% endblock %}

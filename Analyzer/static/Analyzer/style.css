@@ -32,3 +32,12 @@ h1{
 #keywordlist{
     font-size: 30px;
 }
+
+#feedback{
+    text-align: left;
+}
+
+.center{
+    width: auto;
+    text-align: center;
+}

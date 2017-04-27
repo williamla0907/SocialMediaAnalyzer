@@ -1,0 +1,53 @@
+{% extends 'Analyzer/base.html' %}
+
+{%block title%} Feedback {% endblock %}
+
+{% block active_feedback%} active {% endblock %}
+
+{% block body %}
+    <h1>welcome to feedback</h1>
+    <div  class="container">
+        <form class="form-horizontal" action='{% url "Analyzer:add_feedback" %}' method="POST">{% csrf_token %}
+            <div class="form-group">
+                <p id="feed">Your feedback:</p>
+                <p id="count"></p>
+                <textarea id="feedback" name="message" rows="3" cols="30"></textarea>
+                <p id="ins"></p>
+            </div>
+            <div class="form-group">
+                <div >
+                    <button id="butt" type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+
+        function addEvent(obj, type, fn){
+            if(obj && obj.addEventListener){
+                obj.addEventListener(type, fn);
+            }else if(obj && obj.attachEvent){
+                obj.attachEvent('on', type, fn);
+            }
+        }
+
+        function init() {
+            var i = document.getElementById('feedback');
+            addEvent(i, 'keypress', function(){
+                document.getElementById('count').innerHTML = "Character count: " + i.value.length;
+                document.getElementById('feed').innerHTML = "Your feedback: " + i.value;
+            });
+
+            addEvent(i, 'keyup', function(){document.getElementById('ins').innerHTML = "Please click submit to send your feedback to us!";
+            });
+
+            var j = document.getElementById('butt');
+            addEvent(j, 'click', function(){
+               alert("We appreciate your feedback!") ;
+            });
+
+        }
+        window.onload = init;
+    </script>
+{% endblock %}
