@@ -27,7 +27,7 @@ class Twitter_Search():
         for i in range(0, len(full_trending)):
             if full_trending[i]["tweet_volume"] != None:
                 shorted_trending[full_trending[i]["tweet_volume"]] = full_trending[i]["name"]
-        data = shorted_trending
+
         temp_results = []
 
         for key in shorted_trending.keys():
@@ -35,11 +35,12 @@ class Twitter_Search():
 
         temp_results.sort(reverse=True)
         keywords = []
-        for j in range(0,10):
+
+        for j in range(len(temp_results)):
             keywords.append(shorted_trending[temp_results[j]])
 
         result = []
-        for j in range(0,10):
+        for j in range(len(temp_results)):
             result.append(response.Response())
             result[j].changeText(keywords[j])
             result[j].changeVote(temp_results[j])
