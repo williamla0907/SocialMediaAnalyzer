@@ -5,13 +5,13 @@
 {% block active_feedback%} active {% endblock %}
 
 {% block body %}
-    <h1>welcome to feedback</h1>
+    <h1>Welcome to Feedback<br/>We only accept 300-character feedback!</h1>
     <div  class="container">
         <form class="form-horizontal" action='{% url "Analyzer:add_feedback" %}' method="POST">{% csrf_token %}
             <div class="form-group">
                 <p id="feed">Your feedback:</p>
                 <p id="count"></p>
-                <textarea id="feedback" name="message" rows="3" cols="30"></textarea>
+                <textarea id="feedback" name="keyword" rows="3" cols="30"></textarea>
                 <p id="ins"></p>
             </div>
             <div class="form-group">
@@ -34,13 +34,27 @@
 
         function init() {
             var i = document.getElementById('feedback');
-            addEvent(i, 'keypress', function(){
-                document.getElementById('count').innerHTML = "Character count: " + i.value.length;
-                document.getElementById('feed').innerHTML = "Your feedback: " + i.value;
+            addEvent(i, 'keyup', function(){
+                if(i.value.length > 300) {
+                    document.getElementById('count').innerHTML = "Character count: " + i.value.length + " of 300";
+                    document.getElementById('feed').innerHTML = "Your feedback: " + i.value;
+                    document.getElementById('count').style.color = "red";
+                    document.getElementById('feed').style.color = "red";
+                    document.getElementById('butt').disabled = true;
+                    document.getElementById('ins').innerHTML = "Only 300-character feedback please!";
+                    document.getElementById('ins').style.color = "red";
+                }else {
+                    document.getElementById('count').innerHTML = "Character count: " + i.value.length + " of 300";
+                    document.getElementById('feed').innerHTML = "Your feedback: " + i.value;
+                    document.getElementById('count').style.color = "black";
+                    document.getElementById('feed').style.color = "black";
+                    document.getElementById('butt').disabled = false;
+                    document.getElementById('ins').innerHTML = "Please click submit to send your feedback to us!";
+                    document.getElementById('ins').style.color = "black";
+                }
             });
 
-            addEvent(i, 'keyup', function(){document.getElementById('ins').innerHTML = "Please click submit to send your feedback to us!";
-            });
+
 
             var j = document.getElementById('butt');
             addEvent(j, 'click', function(){
@@ -50,4 +64,14 @@
         }
         window.onload = init;
     </script>
+
+    <h2>Feedback List</h2>
+    <ol>
+    {% for item in result %}
+        <li>
+            <p>Date: {{ item.date }} </p>
+            <p>Text: {{ item.text }} </p>
+        </li>
+    {% endfor %}
+    </ol>
 {% endblock %}

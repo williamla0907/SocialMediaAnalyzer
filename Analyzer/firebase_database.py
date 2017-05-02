@@ -1,4 +1,5 @@
 from pyrebase import initialize_app
+from datetime import datetime
 
 #Firebase credentials
 config = {
@@ -22,3 +23,18 @@ def getData(keyword):
     data = data_obj.val()['text']
     data = data.split(';')
     return data
+
+def saveFeedback(feed):
+    data = {}
+    data['text'] = feed
+    data['date'] = str(datetime.now())
+    db.child("feedback").push(data)
+
+def getFeedback():
+    data_obj = db.child('feedback').get()
+    data = data_obj.val()
+    res = []
+    for item in data:
+        res.append(data[item])
+    return res
+
